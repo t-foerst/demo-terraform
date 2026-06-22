@@ -13,3 +13,7 @@ output "configure_kubectl" {
 output "lbc_irsa_role_arn" {
   value = module.aws_lbc_irsa.iam_role_arn
 }
+
+output "demo_certificate_arn" {
+  value = aws_acm_certificate_validation.demo.certificate_arn
+}
