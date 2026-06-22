@@ -1,3 +1,3 @@
-provider "hcloud" {
-  token = var.hcloud_token
+provider "aws" {
+  region = var.aws_region
 }

@@ -1,5 +1,5 @@
-variable "hcloud_token" {
+variable "aws_region" {
   type        = string
-  sensitive   = true
-  description = "Hetzner Cloud API token"
+  default     = "eu-central-1"
+  description = "AWS region to deploy resources into"
 }
