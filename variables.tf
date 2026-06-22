@@ -36,6 +36,6 @@ variable "demo_hostname" {
 
 variable "alb_hostname" {
   type        = string
-  default     = "k8s-demoapp-demoapp-3cead26769-1800411590.eu-central-1.elb.amazonaws.com"
+  default     = null
   description = "DNS name of the ALB created by the AWS Load Balancer Controller for the demo Ingress. Leave null until the Ingress exists, then set it to create the CNAME."
 }
