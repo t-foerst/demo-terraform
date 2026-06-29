@@ -25,3 +25,7 @@ output "app_hostnames" {
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
+
+output "github_actions_deploy_role_arn" {
+  value = aws_iam_role.github_actions_deploy.arn
+}
