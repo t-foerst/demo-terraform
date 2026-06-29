@@ -14,6 +14,14 @@ output "lbc_irsa_role_arn" {
   value = module.aws_lbc_irsa.iam_role_arn
 }
 
-output "demo_certificate_arn" {
-  value = aws_acm_certificate_validation.demo.certificate_arn
+output "apps_certificate_arn" {
+  value = aws_acm_certificate_validation.apps.certificate_arn
+}
+
+output "app_hostnames" {
+  value = var.app_hostnames
+}
+
+output "vpc_id" {
+  value = module.vpc.vpc_id
 }

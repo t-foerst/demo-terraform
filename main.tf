@@ -51,18 +51,19 @@ data "cloudflare_zone" "this" {
   }
 }
 
-resource "aws_acm_certificate" "demo" {
-  domain_name       = var.demo_hostname
-  validation_method = "DNS"
+resource "aws_acm_certificate" "apps" {
+  domain_name               = var.app_hostnames[0]
+  subject_alternative_names = slice(var.app_hostnames, 1, length(var.app_hostnames))
+  validation_method         = "DNS"
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
-resource "cloudflare_dns_record" "demo_cert_validation" {
+resource "cloudflare_dns_record" "apps_cert_validation" {
   for_each = {
-    for dvo in aws_acm_certificate.demo.domain_validation_options : dvo.domain_name => dvo
+    for dvo in aws_acm_certificate.apps.domain_validation_options : dvo.domain_name => dvo
   }
 
   zone_id = data.cloudflare_zone.this.id
@@ -73,18 +74,18 @@ resource "cloudflare_dns_record" "demo_cert_validation" {
   proxied = false
 }
 
-resource "aws_acm_certificate_validation" "demo" {
-  certificate_arn = aws_acm_certificate.demo.arn
+resource "aws_acm_certificate_validation" "apps" {
+  certificate_arn = aws_acm_certificate.apps.arn
   validation_record_fqdns = [
-    for dvo in aws_acm_certificate.demo.domain_validation_options : dvo.resource_record_name
+    for dvo in aws_acm_certificate.apps.domain_validation_options : dvo.resource_record_name
   ]
 }
 
-resource "cloudflare_dns_record" "demo_cname" {
-  count = var.alb_hostname != null ? 1 : 0
+resource "cloudflare_dns_record" "apps_cname" {
+  for_each = var.alb_hostname != null ? toset(var.app_hostnames) : toset([])
 
   zone_id = data.cloudflare_zone.this.id
-  name    = var.demo_hostname
+  name    = each.value
   type    = "CNAME"
   content = var.alb_hostname
   ttl     = 300
