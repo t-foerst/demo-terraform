@@ -57,9 +57,3 @@ variable "db_username" {
   default     = "appuser"
   description = "Master username for the RDS PostgreSQL instance"
 }
-
-variable "db_password" {
-  type        = string
-  sensitive   = true
-  description = "Master password for the RDS PostgreSQL instance"
-}
