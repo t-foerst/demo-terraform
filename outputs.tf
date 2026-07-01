@@ -29,3 +29,12 @@ output "vpc_id" {
 output "github_actions_deploy_role_arn" {
   value = aws_iam_role.github_actions_deploy.arn
 }
+
+output "db_endpoint" {
+  value       = aws_db_instance.postgres.endpoint
+  description = "PostgreSQL connection endpoint (host:port)"
+}
+
+output "db_name" {
+  value = aws_db_instance.postgres.db_name
+}
