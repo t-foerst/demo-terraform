@@ -42,3 +42,7 @@ output "db_name" {
 output "db_secret_arn" {
   value = aws_db_instance.postgres.master_user_secret[0].secret_arn
 }
+
+output "eso_role_arn" {
+  value = module.eso_irsa.iam_role_arn
+}
