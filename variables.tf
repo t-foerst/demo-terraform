@@ -36,7 +36,7 @@ variable "app_hostnames" {
 
 variable "alb_hostname" {
   type        = string
-  default     = null # change this
+  default     = "k8s-democluster-f5f36f3c4f-1964635625.eu-central-1.elb.amazonaws.com" # change this
   description = "DNS name of the ALB created by the AWS Load Balancer Controller for the cluster Ingress. Leave null until the Ingress exists, then set it to create the CNAMEs."
 }
 
