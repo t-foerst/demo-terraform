@@ -30,7 +30,7 @@ variable "domain_name" {
 
 variable "app_hostnames" {
   type        = list(string)
-  default     = ["cicd.foerst.haus", "gitops.foerst.haus", "argocd.foerst.haus"]
+  default     = ["cicd.foerst.haus", "gitops.foerst.haus", "argocd.foerst.haus", "manual.foerst.haus"]
   description = "Hostnames that should be reachable through the cluster ALB"
 }
 
