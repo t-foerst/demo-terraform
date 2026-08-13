@@ -1,0 +1,32 @@
+thorben@fedoraPC:~/NodeAusfallTest$ while true; do
+  TS=$(date -u '+%Y-%m-%d %H:%M:%S')
+  NODES_READY=$(kubectl get nodes --no-headers | awk '$2=="Ready"' | wc -l)
+  NODES_TOTAL=$(kubectl get nodes --no-headers | wc -l)
+  PODS_RUNNING=$(kubectl get pods -n $NAMESPACE --no-headers | awk '$3=="Running"' | wc -l)
+  PODS_TOTAL=$(kubectl get pods -n $NAMESPACE --no-headers | wc -l)
+  read -r HTTP_CODE RESP_TIME <<< "$(curl -o /dev/null -s -w '%{http_code} %{time_total}' --max-time 5 $URL)"
+  echo "$TS NODES=$NODES_READY/$NODES_TOTAL PODS=$PODS_RUNNING/$PODS_TOTAL HTTP=$HTTP_CODE TIME=$RESP_TIME" >> $LOG
+  sleep 5
+done
+
+
+
+Terminierung des nodes bei 17:00:50 mit:
+
+thorben@fedoraPC:~/NodeAusfallTest$ aws ec2 terminate-instances --instance-ids $INSTANCE_ID
+{
+    "TerminatingInstances": [
+        {
+            "InstanceId": "i-089bed4561068e25e",
+            "CurrentState": {
+                "Code": 32,
+                "Name": "shutting-down"
+            },
+            "PreviousState": {
+                "Code": 16,
+                "Name": "running"
+            }
+        }
+    ]
+}
+
