@@ -62,6 +62,10 @@ resource "aws_eks_access_policy_association" "github_actions_deploy" {
   access_scope {
     type = "cluster"
   }
+
+  # Ohne explizite Abhängigkeit assoziiert die Policy manchmal, bevor der Access
+  # Entry AWS-seitig konsistent sichtbar ist (AssociateAccessPolicy: ResourceNotFoundException).
+  depends_on = [aws_eks_access_entry.github_actions_deploy]
 }
 
 # IRSA role for External Secrets Operator
